@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tune In — B2 Grammar Dial</title>
+<style>
+:root{
+--paper:#EDE6D6;
+--paper-dark:#E1D8C2;
+--ink:#2A2620;
+--navy:#2B3A55;
+--navy-deep:#1D2A3F;
+--red:#B23A48;
+--gold:#C9962C;
+--line:#c9bfa4;
+--card:#FBF8F1;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+background:
+radial-gradient(circle at 15% 10%, #f4eedd 0%, transparent 45%),
+var(--paper);
+color:var(--ink);
+font-family: 'Iowan Old Style','Georgia', serif;
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding:28px 16px 60px;
+}
+.masthead{ text-align:center; margin-bottom:6px; }
+.eyebrow{
+font-family:'Courier New', monospace;
+letter-spacing:.25em;
+font-size:11px;
+color:var(--navy);
+text-transform:uppercase;
+}
+h1{
+font-size:clamp(28px,5vw,42px);
+margin:4px 0 2px;
+font-weight:700;
+letter-spacing:.01em;
+}
+.sub{
+font-family:'Courier New', monospace;
+font-size:12.5px;
+color:#6b6353;
+max-width:520px;
+margin:0 auto 18px;
+}
+
+.progress-wrap{ width:min(680px,92vw); margin-bottom:26px; }
+.progress-label{
+display:flex;
+justify-content:space-between;
+font-family:'Courier New', monospace;
+font-size:11.5px;
+letter-spacing:.08em;
+color:var(--navy);
+margin-bottom:6px;
+text-transform:uppercase;
+}
+.tally{
+display:grid;
+grid-template-columns:repeat(30,1fr);
+gap:3px;
+height:16px;
+}
+.tick{
+background:var(--paper-dark);
+border:1px solid var(--line);
+border-radius:1px;
+position:relative;
+overflow:hidden;
+}
+.tick .fill{
+position:absolute;
+left:0; top:0; bottom:0;
+width:0%;
+background:var(--red);
+transition:width .3s ease;
+}
+.tick.complete{ border-color:var(--red); }
+
+main{
+display:flex;
+flex-wrap:wrap;
+gap:36px;
+align-items:flex-start;
+justify-content:center;
+width:min(1000px,96vw);
+}
+
+.dial-col{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+.dial-frame{ position:relative; width:340px; height:340px; }
+.needle{
+position:absolute;
+top:-14px; left:50%;
+transform:translateX(-50%);
+width:0; height:0;
+border-left:11px solid transparent;
+border-right:11px solid transparent;
+border-top:20px solid var(--navy-deep);
+z-index:5;
+filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+}
+canvas{
+display:block;
+border-radius:50%;
+box-shadow:
+0 0 0 6px var(--card),
+0 0 0 9px var(--navy-deep),
+0 18px 30px -12px rgba(30,25,15,.45);
+}
+.hub-btn{
+position:absolute;
+top:50%; left:50%;
+transform:translate(-50%,-50%);
+width:78px; height:78px;
+border-radius:50%;
+background:radial-gradient(circle at 35% 30%, #3a4d6e, var(--navy-deep));
+color:var(--paper);
+border:3px solid var(--gold);
+font-family:'Courier New', monospace;
+font-weight:700;
+letter-spacing:.1em;
+font-size:13px;
+cursor:pointer;
+z-index:6;
+box-shadow:0 4px 10px rgba(0,0,0,.35);
+transition:transform .12s ease;
+}
+.hub-btn:active{transform:translate(-50%,-50%) scale(.94);}
+.hub-btn:disabled{opacity:.6; cursor:default;}
+.hub-btn:focus-visible{outline:3px solid var(--red); outline-offset:3px;}
+
+.toggle-row{
+font-family:'Courier New', monospace;
+font-size:12px;
+color:#5a5344;
+display:flex;
+align-items:center;
+gap:8px;
+text-align:center;
+}
+.toggle-row input{accent-color:var(--red);}
+
+.card-col{
+flex:1 1 320px;
+max-width:400px;
+min-height:340px;
+display:flex;
+align-items:flex-start;
+justify-content:center;
+}
+.index-card{
+background:var(--card);
+width:100%;
+border-radius:4px;
+padding:26px 24px 22px;
+position:relative;
+box-shadow:0 12px 24px -14px rgba(30,25,15,.4), 0 1px 0 rgba(255,255,255,.4) inset;
+border:1px solid var(--line);
+transform:rotate(-1deg);
+transition:transform .5s cubic-bezier(.2,.9,.3,1.2);
+}
+.index-card::before{ content:""; position:absolute; top:20px; left:0; right:0; border-top:1px solid #d8cdb2; }
+.index-card::after{ content:""; position:absolute; top:0; bottom:0; left:52px; border-left:1px solid #e7b9b9; }
+.card-eyebrow{
+font-family:'Courier New', monospace;
+font-size:11px;
+letter-spacing:.15em;
+color:var(--red);
+text-transform:uppercase;
+margin-bottom:10px;
+}
+.card-number{ font-family:'Courier New', monospace; font-size:13px; color:var(--navy); margin-bottom:2px; }
+.card-title{ font-size:23px; font-weight:700; line-height:1.2; margin:4px 0 2px; }
+.card-title.placeholder{ color:#a79c85; font-style:italic; font-weight:400; font-size:17px; }
+.card-lesson{
+font-size:17px;
+color:var(--ink);
+margin:8px 0 14px;
+padding-left:14px;
+border-left:3px solid var(--gold);
+min-height:26px;
+}
+.card-actions{ display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
+.btn{
+font-family:'Courier New', monospace;
+font-size:12px;
+letter-spacing:.06em;
+text-transform:uppercase;
+padding:9px 14px;
+border-radius:3px;
+border:1px solid var(--navy);
+background:transparent;
+color:var(--navy);
+cursor:pointer;
+transition:background .15s ease, color .15s ease;
+}
+.btn:hover{background:var(--navy); color:var(--paper);}
+.btn.primary{ background:var(--red); color:var(--paper); border-color:var(--red); }
+.btn.primary:hover{background:#96222f;}
+.btn:disabled{opacity:.45; cursor:default; background:transparent; color:var(--navy);}
+
+.stamp{
+position:absolute; top:18px; right:18px;
+font-family:'Courier New', monospace;
+font-size:11px; color:var(--gold);
+border:2px solid var(--gold); border-radius:50%;
+width:46px;height:46px;
+display:flex;align-items:center;justify-content:center;
+transform:rotate(12deg);
+opacity:0;
+transition:opacity .3s ease;
+text-align:center; line-height:1.1;
+}
+.stamp.show{opacity:.85;}
+
+.legend{ width:min(1000px,96vw); margin-top:34px; }
+.legend-title{
+font-family:'Courier New', monospace;
+font-size:11.5px;
+letter-spacing:.15em;
+color:var(--navy);
+text-transform:uppercase;
+margin-bottom:10px;
+}
+details.unit{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:4px;
+margin-bottom:8px;
+padding:0;
+}
+details.unit summary{
+list-style:none;
+cursor:pointer;
+padding:10px 14px;
+display:flex;
+align-items:center;
+gap:10px;
+font-size:15px;
+}
+details.unit summary::-webkit-details-marker{ display:none; }
+details.unit summary .arrow{
+font-family:'Courier New', monospace;
+color:var(--navy);
+transition:transform .2s ease;
+flex:none;
+}
+details.unit[open] summary .arrow{ transform:rotate(90deg); }
+details.unit summary .u-num{
+font-family:'Courier New', monospace;
+font-size:12px;
+color:var(--navy);
+width:20px;
+flex:none;
+}
+details.unit summary .u-name{ flex:1; font-weight:600; }
+details.unit summary .u-frac{
+font-family:'Courier New', monospace;
+font-size:11.5px;
+color:var(--red);
+flex:none;
+}
+.lesson-list{ padding:2px 14px 12px 46px; }
+.lesson-item{
+display:flex;
+align-items:baseline;
+gap:8px;
+font-size:13.5px;
+padding:3px 0;
+cursor:pointer;
+user-select:none;
+border-bottom:1px dashed var(--line);
+}
+.lesson-item:last-child{ border-bottom:none; }
+.lesson-item .box{
+font-family:'Courier New', monospace;
+color:var(--navy);
+flex:none;
+}
+.lesson-item.done{ color:var(--red); text-decoration:line-through; }
+.lesson-item.current{ background:rgba(201,150,44,.18); border-radius:3px; }
+
+footer.note{
+margin-top:30px;
+font-family:'Courier New', monospace;
+font-size:11px;
+color:#9a9078;
+text-align:center;
+max-width:520px;
+}
+
+@media (prefers-reduced-motion: reduce){
+canvas, .index-card{transition:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="masthead">
+<div class="eyebrow">B2 English · Grammar Study Dial</div>
+<h1>Tune In For Today's Lesson</h1>
+<div class="sub">Spin the dial to land on one of the 30 units, then it pulls a specific lesson from inside that unit — every item in your syllabus is in the pool.</div>
+</div>
+
+<div class="progress-wrap">
+<div class="progress-label">
+<span>Lessons covered</span>
+<span id="progressCount">0 / 0</span>
+</div>
+<div class="tally" id="tally"></div>
+</div>
+
+<main>
+<div class="dial-col">
+<div class="dial-frame">
+<div class="needle"></div>
+<canvas id="wheel" width="340" height="340"></canvas>
+<button class="hub-btn" id="spinBtn">SPIN</button>
+</div>
+<label class="toggle-row">
+<input type="checkbox" id="skipDone" checked>
+Only pull lessons I haven't studied yet
+</label>
+</div>
+
+<div class="card-col">
+<div class="index-card" id="card">
+<div class="stamp" id="stamp">DONE</div>
+<div class="card-eyebrow">On the air</div>
+<div class="card-number" id="cardNumber">Frequency —</div>
+<div class="card-title placeholder" id="cardTitle">Spin the dial to pick tonight's unit.</div>
+<div class="card-lesson" id="cardLesson"></div>
+<div class="card-actions">
+<button class="btn primary" id="markBtn" disabled>Mark lesson as studied</button>
+<button class="btn" id="undoBtn" disabled>Undo</button>
+</div>
+</div>
+</div>
+</main>
+
+<div class="legend">
+<div class="legend-title">Full syllabus — expand a unit, tap any lesson to toggle studied</div>
+<div id="legendGrid"></div>
+</div>
+
+<footer class="note">Progress is saved on this device automatically. The wheel picks the unit; the pool underneath always draws from every individual lesson listed inside it.</footer>
+
+<script>
+const units = [
+{ name:"Verb Tenses", lessons:["Present Simple","Present Continuous","Present Perfect","Present Perfect Continuous","Past Simple","Past Continuous","Past Perfect","Past Perfect Continuous","Future Simple (will)","Be going to","Present Continuous for future","Future Continuous","Future Perfect","Future Perfect Continuous"] },
+{ name:"Question Formation", lessons:["Yes/No questions","WH- questions","Indirect questions","Question tags","Embedded questions"] },
+{ name:"Auxiliary Verbs", lessons:["do / does / did","be","have","will","Short answers"] },
+{ name:"Modal Verbs", lessons:["can","could","may","might","must","have to","should","ought to","shall","will","would","need","dare","should have","could have","would have","might have","must have","can't have"] },
+{ name:"Conditionals", lessons:["Zero conditional","First conditional","Second conditional","Third conditional","Mixed conditionals","Unless","As long as","Provided that","In case"] },
+{ name:"Wishes & Regrets", lessons:["I wish…","If only…","I'd rather…","It's time…"] },
+{ name:"Passive Voice", lessons:["Passive in all tenses","Passive with modals","Get passive","Have something done (causative)"] },
+{ name:"Reported Speech", lessons:["Statements","Questions","Commands","Reporting verbs","Tense backshifting","Time changes"] },
+{ name:"Relative Clauses", lessons:["who","whom","whose","which","that","where","when","why","Defining relative clauses","Non-defining relative clauses","Reduced relative clauses"] },
+{ name:"Gerunds & Infinitives", lessons:["Verb + gerund","Verb + infinitive","Verb + object + infinitive","Verb + preposition + gerund","Meaning changes"] },
+{ name:"Participles", lessons:["Present participles","Past participles","Participle clauses"] },
+{ name:"Articles", lessons:["a","an","the","Zero article"] },
+{ name:"Countable & Uncountable Nouns", lessons:["much","many","little","few","less","fewer","amount","number"] },
+{ name:"Quantifiers", lessons:["some","any","no","enough","plenty of","several","both","either","neither","all","each","every","none"] },
+{ name:"Pronouns", lessons:["Subject pronouns","Object pronouns","Reflexive pronouns","Reciprocal pronouns","Demonstrative pronouns","Indefinite pronouns","Relative pronouns"] },
+{ name:"Determiners", lessons:["this","that","these","those","each","every","either","neither","another","other","the other","others"] },
+{ name:"Adjectives", lessons:["Order of adjectives","Comparative","Superlative","Equal comparison","Too / Enough / So / Such"] },
+{ name:"Adverbs", lessons:["Position","Frequency","Degree","Manner","Sentence adverbs"] },
+{ name:"Prepositions", lessons:["Time","Place","Movement","Common verb-preposition combinations","Adjective-preposition combinations"] },
+{ name:"Conjunctions & Linking Words", lessons:["although","though","even though","despite","in spite of","because","since","as","therefore","however","moreover","furthermore","nevertheless","whereas","while","on the other hand"] },
+{ name:"Phrasal Verbs", lessons:["Study the most common 200–300 phrasal verbs"] },
+{ name:"Collocations", lessons:["make a decision","take responsibility","do research","highly recommended","heavy rain"] },
+{ name:"Word Formation", lessons:["Prefixes","Suffixes","Noun ↔ Verb ↔ Adjective ↔ Adverb transformations"] },
+{ name:"Sentence Structure", lessons:["Simple sentences","Compound sentences","Complex sentences","Compound-complex sentences"] },
+{ name:"Clauses", lessons:["Noun clauses","Adjective clauses","Adverb clauses"] },
+{ name:"Inversion (Upper B2)", lessons:["Never have I…","Hardly had…","No sooner…","Not only… but also…"] },
+{ name:"Emphasis", lessons:["Cleft sentences (It was… that…)","What clauses","Do for emphasis (\"I do agree.\")"] },
+{ name:"Hedging", lessons:["seem","appear","tend to","likely","probably","apparently","arguably"] },
+{ name:"Formal vs Informal English", lessons:["Spoken vs written grammar","Email language","Academic style","Professional writing"] },
+{ name:"Common B1 Mistakes to Eliminate", lessons:["Subject–verb agreement","Incorrect word order","Missing articles","Wrong prepositions","Verb pattern mistakes","Tense consistency","Incorrect question formation","Run-on sentences","Comma misuse"] }
+];
+
+const N = units.length;
+const TOTAL_LESSONS = units.reduce((s,u)=>s+u.lessons.length,0);
+const colors = ["#2B3A55","#B23A48","#C9962C","#5B6F52"];
+const STORAGE_KEY = "grammar-wheel-studied-lessons-v2";
+
+let studied = new Set();
+let current = null;
+let rotation = 0;
+let spinning = false;
+
+const canvas = document.getElementById('wheel');
+const ctx = canvas.getContext('2d');
+const size = canvas.width;
+const cx = size/2, cy = size/2, radius = size/2 - 4;
+
+function key(u,l){ return u+"-"+l; }
+function unitDoneCount(u){
+let c = 0;
+for(let l=0;l<units[u].lessons.length;l++) if(studied.has(key(u,l))) c++;
+return c;
+}
+function unitComplete(u){ return unitDoneCount(u) === units[u].lessons.length; }
+
+function drawWheel(){
+ctx.clearRect(0,0,size,size);
+const slice = (Math.PI*2)/N;
+for(let i=0;i<N;i++){
+const start = i*slice + rotation;
+const end = start + slice;
+ctx.beginPath();
+ctx.moveTo(cx,cy);
+ctx.arc(cx,cy,radius,start,end);
+ctx.closePath();
+ctx.fillStyle = colors[i % colors.length];
+ctx.globalAlpha = unitComplete(i) ? 0.35 : 1;
+ctx.fill();
+ctx.globalAlpha = 1;
+ctx.save();
+ctx.translate(cx,cy);
+ctx.rotate(start + slice/2);
+ctx.textAlign = "right";
+ctx.fillStyle = "#F4EEDD";
+ctx.font = "700 13px 'Courier New', monospace";
+ctx.fillText((i+1).toString(), radius - 12, 5);
+ctx.restore();
+}
+ctx.beginPath();
+ctx.arc(cx,cy,radius,0,Math.PI*2);
+ctx.strokeStyle = "#1D2A3F";
+ctx.lineWidth = 2;
+ctx.stroke();
+}
+
+function renderLegend(){
+const grid = document.getElementById('legendGrid');
+grid.innerHTML = "";
+units.forEach((u,ui)=>{
+const det = document.createElement('details');
+det.className = 'unit';
+if(current && current.unitIdx === ui) det.open = true;
+const done = unitDoneCount(ui);
+det.innerHTML = `<summary>         <span class="arrow">▶</span>         <span class="u-num">${(ui+1).toString().padStart(2,'0')}</span>         <span class="u-name">${u.name}</span>         <span class="u-frac">${done}/${u.lessons.length}</span>       </summary>       <div class="lesson-list"></div>`;
+const list = det.querySelector('.lesson-list');
+u.lessons.forEach((lname, li)=>{
+const isDone = studied.has(key(ui,li));
+const isCurrent = current && current.unitIdx===ui && current.lessonIdx===li;
+const row = document.createElement('div');
+row.className = 'lesson-item' + (isDone?' done':'') + (isCurrent?' current':'');
+row.innerHTML = `<span class="box">${isDone?'☑':'☐'}</span><span>${lname}</span>`;
+row.addEventListener('click', ()=>{
+const k = key(ui,li);
+if(studied.has(k)) studied.delete(k); else studied.add(k);
+persist();
+renderAll();
+});
+list.appendChild(row);
+});
+grid.appendChild(det);
+});
+}
+
+function renderTally(){
+const tally = document.getElementById('tally');
+tally.innerHTML = "";
+for(let i=0;i<N;i++){
+const pct = Math.round((unitDoneCount(i)/units[i].lessons.length)*100);
+const d = document.createElement('div');
+d.className = 'tick' + (pct===100?' complete':'');
+d.title = units[i].name + ": " + unitDoneCount(i) + "/" + units[i].lessons.length;
+const fill = document.createElement('div');
+fill.className = 'fill';
+fill.style.width = pct + '%';
+d.appendChild(fill);
+tally.appendChild(d);
+}
+document.getElementById('progressCount').textContent = `${studied.size} / ${TOTAL_LESSONS}`;
+}
+
+function renderAll(){
+drawWheel();
+renderLegend();
+renderTally();
+}
+
+async function persist(){
+try{
+await window.storage.set(STORAGE_KEY, JSON.stringify(Array.from(studied)), false);
+}catch(e){ console.error('storage set failed', e); }
+}
+
+async function load(){
+try{
+const res = await window.storage.get(STORAGE_KEY, false);
+if(res && res.value){
+studied = new Set(JSON.parse(res.value));
+}
+}catch(e){ /* no key yet */ }
+renderAll();
+}
+
+function pickUnit(){
+const skipDone = document.getElementById('skipDone').checked;
+let pool = [];
+for(let i=0;i<N;i++){
+if(skipDone && unitComplete(i)) continue;
+pool.push(i);
+}
+if(pool.length === 0) pool = [...Array(N).keys()];
+return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function pickLesson(unitIdx){
+const skipDone = document.getElementById('skipDone').checked;
+const lessons = units[unitIdx].lessons;
+let pool = [];
+for(let l=0;l<lessons.length;l++){
+if(skipDone && studied.has(key(unitIdx,l))) continue;
+pool.push(l);
+}
+if(pool.length === 0) pool = [...Array(lessons.length).keys()];
+return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function showResult(unitIdx){
+const lessonIdx = pickLesson(unitIdx);
+current = { unitIdx, lessonIdx };
+const k = key(unitIdx,lessonIdx);
+document.getElementById('cardNumber').textContent = `Unit ${(unitIdx+1).toString().padStart(2,'0')} / ${N}`;
+const titleEl = document.getElementById('cardTitle');
+titleEl.classList.remove('placeholder');
+titleEl.textContent = units[unitIdx].name;
+document.getElementById('cardLesson').textContent = units[unitIdx].lessons[lessonIdx];
+document.getElementById('markBtn').disabled = studied.has(k);
+document.getElementById('undoBtn').disabled = !studied.has(k);
+document.getElementById('stamp').classList.toggle('show', studied.has(k));
+const card = document.getElementById('card');
+card.style.transform = 'rotate(1deg) scale(1.02)';
+setTimeout(()=>{ card.style.transform = 'rotate(-1deg) scale(1)'; }, 220);
+renderLegend();
+}
+
+document.getElementById('spinBtn').addEventListener('click', ()=>{
+if(spinning) return;
+spinning = true;
+const btn = document.getElementById('spinBtn');
+btn.disabled = true;
+
+const target = pickUnit();
+const slice = (Math.PI*2)/N;
+const sliceCenter = target*slice + slice/2;
+const extraSpins = 6 + Math.floor(Math.random()*3);
+const desiredFinal = (-Math.PI/2) - sliceCenter;
+let finalRotation = desiredFinal + Math.PI*2*extraSpins;
+
+const duration = 3200;
+const startRotation = rotation;
+const delta = finalRotation - startRotation;
+const startTime = performance.now();
+
+function easeOutCubic(t){ return 1 - Math.pow(1-t,3); }
+
+function animate(now){
+const elapsed = now - startTime;
+const t = Math.min(elapsed/duration, 1);
+rotation = startRotation + delta*easeOutCubic(t);
+drawWheel();
+if(t < 1){
+requestAnimationFrame(animate);
+}else{
+rotation = finalRotation % (Math.PI*2);
+spinning = false;
+btn.disabled = false;
+showResult(target);
+}
+}
+requestAnimationFrame(animate);
+});
+
+document.getElementById('markBtn').addEventListener('click', ()=>{
+if(!current) return;
+studied.add(key(current.unitIdx, current.lessonIdx));
+persist();
+document.getElementById('markBtn').disabled = true;
+document.getElementById('undoBtn').disabled = false;
+document.getElementById('stamp').classList.add('show');
+renderAll();
+});
+
+document.getElementById('undoBtn').addEventListener('click', ()=>{
+if(!current) return;
+studied.delete(key(current.unitIdx, current.lessonIdx));
+persist();
+document.getElementById('markBtn').disabled = false;
+document.getElementById('undoBtn').disabled = true;
+document.getElementById('stamp').classList.remove('show');
+renderAll();
+});
+
+load();
+</script>
+</body>
+</html>
