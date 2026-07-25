@@ -3,51 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tune In — B2 Grammar Dial</title>
+<title>Tune In ♡ B2 Grammar Dial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{
---paper:#EDE6D6;
---paper-dark:#E1D8C2;
---ink:#2A2620;
---navy:#2B3A55;
---navy-deep:#1D2A3F;
---red:#B23A48;
---gold:#C9962C;
---line:#c9bfa4;
---card:#FBF8F1;
+--paper:#FFF3F8;
+--paper-dark:#FBE0EC;
+--ink:#5A3B4A;
+--pink:#FF6FA5;
+--pink-deep:#D6478A;
+--hotpink:#FF2E88;
+--lilac:#B98CD9;
+--gold:#F2B6D0;
+--line:#f3c6dc;
+--card:#FFFDFE;
+--sparkle:#FFD3E8;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
 background:
-radial-gradient(circle at 15% 10%, #f4eedd 0%, transparent 45%),
+radial-gradient(circle at 15% 10%, #ffe3f1 0%, transparent 45%),
+radial-gradient(circle at 85% 90%, #f3d9ff 0%, transparent 50%),
 var(--paper);
 color:var(--ink);
-font-family: 'Iowan Old Style','Georgia', serif;
+font-family:'Poppins','Georgia', serif;
 min-height:100vh;
 display:flex;
 flex-direction:column;
 align-items:center;
 padding:28px 16px 60px;
+position:relative;
+overflow-x:hidden;
 }
-.masthead{ text-align:center; margin-bottom:6px; }
+body::before{
+content:"✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦ ✧ ✦";
+position:fixed;
+top:0; left:0; right:0;
+font-size:14px;
+letter-spacing:12px;
+color:var(--sparkle);
+white-space:nowrap;
+overflow:hidden;
+opacity:.7;
+padding:6px 0;
+pointer-events:none;
+}
+.masthead{ text-align:center; margin-bottom:6px; margin-top:14px; }
 .eyebrow{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 letter-spacing:.25em;
 font-size:11px;
-color:var(--navy);
+color:var(--pink-deep);
 text-transform:uppercase;
+font-weight:600;
 }
 h1{
-font-size:clamp(28px,5vw,42px);
-margin:4px 0 2px;
+font-family:'Playfair Display', serif;
+font-style:italic;
+font-size:clamp(30px,5vw,46px);
+margin:6px 0 2px;
 font-weight:700;
 letter-spacing:.01em;
+color:var(--hotpink);
+text-shadow:2px 2px 0 var(--sparkle);
 }
+h1::after{ content:" ♡"; }
 .sub{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:12.5px;
-color:#6b6353;
+color:#9c7688;
 max-width:520px;
 margin:0 auto 18px;
 }
@@ -56,12 +82,13 @@ margin:0 auto 18px;
 .progress-label{
 display:flex;
 justify-content:space-between;
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:11.5px;
 letter-spacing:.08em;
-color:var(--navy);
+color:var(--pink-deep);
 margin-bottom:6px;
 text-transform:uppercase;
+font-weight:600;
 }
 .tally{
 display:grid;
@@ -72,7 +99,7 @@ height:16px;
 .tick{
 background:var(--paper-dark);
 border:1px solid var(--line);
-border-radius:1px;
+border-radius:4px;
 position:relative;
 overflow:hidden;
 }
@@ -80,10 +107,10 @@ overflow:hidden;
 position:absolute;
 left:0; top:0; bottom:0;
 width:0%;
-background:var(--red);
+background:linear-gradient(90deg, var(--pink), var(--hotpink));
 transition:width .3s ease;
 }
-.tick.complete{ border-color:var(--red); }
+.tick.complete{ border-color:var(--hotpink); box-shadow:0 0 4px var(--pink); }
 
 main{
 display:flex;
@@ -98,55 +125,60 @@ width:min(1000px,96vw);
 .dial-frame{ position:relative; width:340px; height:340px; }
 .needle{
 position:absolute;
-top:-14px; left:50%;
+top:-18px; left:50%;
 transform:translateX(-50%);
-width:0; height:0;
-border-left:11px solid transparent;
-border-right:11px solid transparent;
-border-top:20px solid var(--navy-deep);
+width:26px; height:26px;
 z-index:5;
-filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
+filter:drop-shadow(0 2px 3px rgba(214,71,138,.4));
+}
+.needle::before{
+content:"♡";
+font-size:26px;
+color:var(--hotpink);
+position:absolute;
+top:0; left:0;
+transform:rotate(180deg);
 }
 canvas{
 display:block;
 border-radius:50%;
 box-shadow:
 0 0 0 6px var(--card),
-0 0 0 9px var(--navy-deep),
-0 18px 30px -12px rgba(30,25,15,.45);
+0 0 0 10px var(--hotpink),
+0 18px 30px -12px rgba(214,71,138,.45);
 }
 .hub-btn{
 position:absolute;
 top:50%; left:50%;
 transform:translate(-50%,-50%);
-width:78px; height:78px;
+width:80px; height:80px;
 border-radius:50%;
-background:radial-gradient(circle at 35% 30%, #3a4d6e, var(--navy-deep));
-color:var(--paper);
-border:3px solid var(--gold);
-font-family:'Courier New', monospace;
+background:radial-gradient(circle at 35% 30%, #ff9fc7, var(--hotpink));
+color:#fff;
+border:3px solid #fff;
+font-family:'Poppins', sans-serif;
 font-weight:700;
 letter-spacing:.1em;
 font-size:13px;
 cursor:pointer;
 z-index:6;
-box-shadow:0 4px 10px rgba(0,0,0,.35);
+box-shadow:0 4px 14px rgba(214,71,138,.55);
 transition:transform .12s ease;
 }
 .hub-btn:active{transform:translate(-50%,-50%) scale(.94);}
 .hub-btn:disabled{opacity:.6; cursor:default;}
-.hub-btn:focus-visible{outline:3px solid var(--red); outline-offset:3px;}
+.hub-btn:focus-visible{outline:3px solid var(--lilac); outline-offset:3px;}
 
 .toggle-row{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:12px;
-color:#5a5344;
+color:#9c7688;
 display:flex;
 align-items:center;
 gap:8px;
 text-align:center;
 }
-.toggle-row input{accent-color:var(--red);}
+.toggle-row input{accent-color:var(--hotpink);}
 
 .card-col{
 flex:1 1 320px;
@@ -159,83 +191,91 @@ justify-content:center;
 .index-card{
 background:var(--card);
 width:100%;
-border-radius:4px;
+border-radius:16px;
 padding:26px 24px 22px;
 position:relative;
-box-shadow:0 12px 24px -14px rgba(30,25,15,.4), 0 1px 0 rgba(255,255,255,.4) inset;
-border:1px solid var(--line);
+box-shadow:0 12px 24px -14px rgba(214,71,138,.35), 0 1px 0 rgba(255,255,255,.4) inset;
+border:2px solid var(--line);
 transform:rotate(-1deg);
 transition:transform .5s cubic-bezier(.2,.9,.3,1.2);
 }
-.index-card::before{ content:""; position:absolute; top:20px; left:0; right:0; border-top:1px solid #d8cdb2; }
-.index-card::after{ content:""; position:absolute; top:0; bottom:0; left:52px; border-left:1px solid #e7b9b9; }
+.index-card::before{ content:""; position:absolute; top:20px; left:0; right:0; border-top:1px dashed var(--gold); }
+.index-card::after{ content:"✦"; position:absolute; top:6px; left:14px; color:var(--pink); font-size:14px; }
 .card-eyebrow{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:11px;
 letter-spacing:.15em;
-color:var(--red);
+color:var(--hotpink);
 text-transform:uppercase;
 margin-bottom:10px;
+font-weight:600;
 }
-.card-number{ font-family:'Courier New', monospace; font-size:13px; color:var(--navy); margin-bottom:2px; }
-.card-title{ font-size:23px; font-weight:700; line-height:1.2; margin:4px 0 2px; }
-.card-title.placeholder{ color:#a79c85; font-style:italic; font-weight:400; font-size:17px; }
+.card-number{ font-family:'Poppins', sans-serif; font-size:13px; color:var(--lilac); margin-bottom:2px; font-weight:600; }
+.card-title{ font-family:'Playfair Display', serif; font-size:24px; font-weight:700; line-height:1.2; margin:4px 0 2px; color:var(--ink); }
+.card-title.placeholder{ color:#d19cb8; font-style:italic; font-weight:400; font-size:17px; font-family:'Poppins', sans-serif; }
 .card-lesson{
-font-size:17px;
-color:var(--ink);
+font-family:'Caveat', cursive;
+font-size:22px;
+color:var(--pink-deep);
 margin:8px 0 14px;
 padding-left:14px;
-border-left:3px solid var(--gold);
+border-left:3px solid var(--pink);
 min-height:26px;
 }
 .card-actions{ display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
 .btn{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:12px;
 letter-spacing:.06em;
 text-transform:uppercase;
 padding:9px 14px;
-border-radius:3px;
-border:1px solid var(--navy);
+border-radius:20px;
+border:1px solid var(--hotpink);
 background:transparent;
-color:var(--navy);
+color:var(--hotpink);
 cursor:pointer;
 transition:background .15s ease, color .15s ease;
+font-weight:600;
 }
-.btn:hover{background:var(--navy); color:var(--paper);}
-.btn.primary{ background:var(--red); color:var(--paper); border-color:var(--red); }
-.btn.primary:hover{background:#96222f;}
-.btn:disabled{opacity:.45; cursor:default; background:transparent; color:var(--navy);}
+.btn:hover{background:var(--hotpink); color:#fff;}
+.btn.primary{ background:linear-gradient(90deg, var(--pink), var(--hotpink)); color:#fff; border-color:var(--hotpink); }
+.btn.primary:hover{background:var(--pink-deep); opacity:.95;}
+.btn:disabled{opacity:.45; cursor:default; background:transparent; color:var(--hotpink);}
 
 .stamp{
 position:absolute; top:18px; right:18px;
-font-family:'Courier New', monospace;
-font-size:11px; color:var(--gold);
-border:2px solid var(--gold); border-radius:50%;
-width:46px;height:46px;
+font-family:'Poppins', sans-serif;
+font-size:11px; color:#fff;
+background:radial-gradient(circle at 35% 30%, #ff9fc7, var(--hotpink));
+border:2px solid #fff; border-radius:50%;
+width:48px;height:48px;
 display:flex;align-items:center;justify-content:center;
 transform:rotate(12deg);
 opacity:0;
 transition:opacity .3s ease;
 text-align:center; line-height:1.1;
+font-weight:700;
+box-shadow:0 2px 8px rgba(214,71,138,.5);
 }
-.stamp.show{opacity:.85;}
+.stamp.show{opacity:1;}
 
 .legend{ width:min(1000px,96vw); margin-top:34px; }
 .legend-title{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:11.5px;
 letter-spacing:.15em;
-color:var(--navy);
+color:var(--pink-deep);
 text-transform:uppercase;
 margin-bottom:10px;
+font-weight:600;
 }
 details.unit{
 background:var(--card);
 border:1px solid var(--line);
-border-radius:4px;
+border-radius:12px;
 margin-bottom:8px;
 padding:0;
+overflow:hidden;
 }
 details.unit summary{
 list-style:none;
@@ -248,25 +288,27 @@ font-size:15px;
 }
 details.unit summary::-webkit-details-marker{ display:none; }
 details.unit summary .arrow{
-font-family:'Courier New', monospace;
-color:var(--navy);
+font-family:'Poppins', sans-serif;
+color:var(--hotpink);
 transition:transform .2s ease;
 flex:none;
 }
 details.unit[open] summary .arrow{ transform:rotate(90deg); }
 details.unit summary .u-num{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:12px;
-color:var(--navy);
+color:var(--lilac);
 width:20px;
 flex:none;
+font-weight:600;
 }
-details.unit summary .u-name{ flex:1; font-weight:600; }
+details.unit summary .u-name{ flex:1; font-weight:600; color:var(--ink); }
 details.unit summary .u-frac{
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:11.5px;
-color:var(--red);
+color:var(--hotpink);
 flex:none;
+font-weight:600;
 }
 .lesson-list{ padding:2px 14px 12px 46px; }
 .lesson-item{
@@ -281,18 +323,18 @@ border-bottom:1px dashed var(--line);
 }
 .lesson-item:last-child{ border-bottom:none; }
 .lesson-item .box{
-font-family:'Courier New', monospace;
-color:var(--navy);
+font-family:'Poppins', sans-serif;
+color:var(--hotpink);
 flex:none;
 }
-.lesson-item.done{ color:var(--red); text-decoration:line-through; }
-.lesson-item.current{ background:rgba(201,150,44,.18); border-radius:3px; }
+.lesson-item.done{ color:var(--pink-deep); text-decoration:line-through; }
+.lesson-item.current{ background:rgba(255,111,165,.15); border-radius:6px; }
 
 footer.note{
 margin-top:30px;
-font-family:'Courier New', monospace;
+font-family:'Poppins', sans-serif;
 font-size:11px;
-color:#9a9078;
+color:#c398ac;
 text-align:center;
 max-width:520px;
 }
@@ -351,7 +393,7 @@ Only pull lessons I haven't studied yet
 <div id="legendGrid"></div>
 </div>
 
-<footer class="note">Progress is saved on this device automatically. The wheel picks the unit; the pool underneath always draws from every individual lesson listed inside it.</footer>
+<footer class="note">Progress is saved on this device automatically. The wheel picks the unit; the pool underneath always draws from every individual lesson listed inside it. ♡</footer>
 
 <script>
 const units = [
@@ -389,13 +431,130 @@ const units = [
 
 const N = units.length;
 const TOTAL_LESSONS = units.reduce((s,u)=>s+u.lessons.length,0);
-const colors = ["#2B3A55","#B23A48","#C9962C","#5B6F52"];
+const colors = ["#FF6FA5","#B98CD9","#FF9FC7","#E8A6D7"];
 const STORAGE_KEY = "grammar-wheel-studied-lessons-v2";
 
 let studied = new Set();
 let current = null;
 let rotation = 0;
 let spinning = false;
+
+/* ---------- sound engine ---------- */
+let actx = null;
+function getCtx(){
+if(!actx) actx = new (window.AudioContext || window.webkitAudioContext)();
+if(actx.state === 'suspended') actx.resume();
+return actx;
+}
+
+function tickSound(){
+const ac = getCtx();
+const t = ac.currentTime;
+const osc = ac.createOscillator();
+const gain = ac.createGain();
+osc.type = 'triangle';
+osc.frequency.setValueAtTime(1600, t);
+osc.frequency.exponentialRampToValueAtTime(900, t + 0.045);
+gain.gain.setValueAtTime(0.0001, t);
+gain.gain.exponentialRampToValueAtTime(0.22, t + 0.004);
+gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+osc.connect(gain);
+gain.connect(ac.destination);
+osc.start(t);
+osc.stop(t + 0.07);
+}
+
+function whooshStart(){
+const ac = getCtx();
+const t = ac.currentTime;
+const bufferSize = ac.sampleRate * 0.4;
+const buffer = ac.createBuffer(1, bufferSize, ac.sampleRate);
+const data = buffer.getChannelData(0);
+for(let i=0;i<bufferSize;i++){ data[i] = (Math.random()*2-1) * (1 - i/bufferSize); }
+const noise = ac.createBufferSource();
+noise.buffer = buffer;
+const filter = ac.createBiquadFilter();
+filter.type = 'bandpass';
+filter.frequency.setValueAtTime(600, t);
+filter.frequency.exponentialRampToValueAtTime(2200, t + 0.4);
+filter.Q.value = 0.7;
+const gain = ac.createGain();
+gain.gain.setValueAtTime(0.0001, t);
+gain.gain.exponentialRampToValueAtTime(0.18, t + 0.05);
+gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+noise.connect(filter);
+filter.connect(gain);
+gain.connect(ac.destination);
+noise.start(t);
+noise.stop(t + 0.4);
+}
+
+function landingChime(){
+const ac = getCtx();
+const t0 = ac.currentTime;
+const notes = [880, 1108.7, 1318.5, 1760]; // A5 C#6 E6 A6 - sparkly major arpeggio
+notes.forEach((freq, i)=>{
+const start = t0 + i*0.075;
+const osc = ac.createOscillator();
+const gain = ac.createGain();
+osc.type = 'sine';
+osc.frequency.setValueAtTime(freq, start);
+gain.gain.setValueAtTime(0.0001, start);
+gain.gain.exponentialRampToValueAtTime(0.28, start + 0.02);
+gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+osc.connect(gain);
+gain.connect(ac.destination);
+osc.start(start);
+osc.stop(start + 0.55);
+});
+// soft shimmer layer
+const shimmer = ac.createOscillator();
+const shimmerGain = ac.createGain();
+shimmer.type = 'triangle';
+shimmer.frequency.setValueAtTime(2637, t0 + 0.28);
+shimmerGain.gain.setValueAtTime(0.0001, t0 + 0.28);
+shimmerGain.gain.exponentialRampToValueAtTime(0.12, t0 + 0.3);
+shimmerGain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.9);
+shimmer.connect(shimmerGain);
+shimmerGain.connect(ac.destination);
+shimmer.start(t0 + 0.28);
+shimmer.stop(t0 + 0.95);
+}
+
+function popSound(){
+const ac = getCtx();
+const t = ac.currentTime;
+const osc = ac.createOscillator();
+const gain = ac.createGain();
+osc.type = 'sine';
+osc.frequency.setValueAtTime(500, t);
+osc.frequency.exponentialRampToValueAtTime(1000, t + 0.09);
+gain.gain.setValueAtTime(0.0001, t);
+gain.gain.exponentialRampToValueAtTime(0.25, t + 0.01);
+gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.15);
+osc.connect(gain);
+gain.connect(ac.destination);
+osc.start(t);
+osc.stop(t + 0.16);
+}
+
+function undoSound(){
+const ac = getCtx();
+const t = ac.currentTime;
+const osc = ac.createOscillator();
+const gain = ac.createGain();
+osc.type = 'sine';
+osc.frequency.setValueAtTime(700, t);
+osc.frequency.exponentialRampToValueAtTime(380, t + 0.12);
+gain.gain.setValueAtTime(0.0001, t);
+gain.gain.exponentialRampToValueAtTime(0.18, t + 0.01);
+gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+osc.connect(gain);
+gain.connect(ac.destination);
+osc.start(t);
+osc.stop(t + 0.17);
+}
+/* ---------- end sound engine ---------- */
 
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
@@ -428,14 +587,14 @@ ctx.save();
 ctx.translate(cx,cy);
 ctx.rotate(start + slice/2);
 ctx.textAlign = "right";
-ctx.fillStyle = "#F4EEDD";
-ctx.font = "700 13px 'Courier New', monospace";
+ctx.fillStyle = "#FFF3F8";
+ctx.font = "700 13px 'Poppins', sans-serif";
 ctx.fillText((i+1).toString(), radius - 12, 5);
 ctx.restore();
 }
 ctx.beginPath();
 ctx.arc(cx,cy,radius,0,Math.PI*2);
-ctx.strokeStyle = "#1D2A3F";
+ctx.strokeStyle = "#D6478A";
 ctx.lineWidth = 2;
 ctx.stroke();
 }
@@ -455,10 +614,10 @@ const isDone = studied.has(key(ui,li));
 const isCurrent = current && current.unitIdx===ui && current.lessonIdx===li;
 const row = document.createElement('div');
 row.className = 'lesson-item' + (isDone?' done':'') + (isCurrent?' current':'');
-row.innerHTML = `<span class="box">${isDone?'☑':'☐'}</span><span>${lname}</span>`;
+row.innerHTML = `<span class="box">${isDone?'♥':'♡'}</span><span>${lname}</span>`;
 row.addEventListener('click', ()=>{
 const k = key(ui,li);
-if(studied.has(k)) studied.delete(k); else studied.add(k);
+if(studied.has(k)){ studied.delete(k); undoSound(); } else { studied.add(k); popSound(); }
 persist();
 renderAll();
 });
@@ -551,6 +710,8 @@ renderLegend();
 document.getElementById('spinBtn').addEventListener('click', ()=>{
 if(spinning) return;
 spinning = true;
+getCtx();
+whooshStart();
 const btn = document.getElementById('spinBtn');
 btn.disabled = true;
 
@@ -565,6 +726,7 @@ const duration = 3200;
 const startRotation = rotation;
 const delta = finalRotation - startRotation;
 const startTime = performance.now();
+let lastSliceCrossed = Math.floor(((-startRotation % (Math.PI*2)) + Math.PI*2*4) / slice);
 
 function easeOutCubic(t){ return 1 - Math.pow(1-t,3); }
 
@@ -573,12 +735,20 @@ const elapsed = now - startTime;
 const t = Math.min(elapsed/duration, 1);
 rotation = startRotation + delta*easeOutCubic(t);
 drawWheel();
+
+const sliceNow = Math.floor(((-rotation % (Math.PI*2)) + Math.PI*2*4) / slice);
+if(sliceNow !== lastSliceCrossed){
+tickSound();
+lastSliceCrossed = sliceNow;
+}
+
 if(t < 1){
 requestAnimationFrame(animate);
 }else{
 rotation = finalRotation % (Math.PI*2);
 spinning = false;
 btn.disabled = false;
+landingChime();
 showResult(target);
 }
 }
@@ -587,6 +757,7 @@ requestAnimationFrame(animate);
 
 document.getElementById('markBtn').addEventListener('click', ()=>{
 if(!current) return;
+popSound();
 studied.add(key(current.unitIdx, current.lessonIdx));
 persist();
 document.getElementById('markBtn').disabled = true;
@@ -597,6 +768,7 @@ renderAll();
 
 document.getElementById('undoBtn').addEventListener('click', ()=>{
 if(!current) return;
+undoSound();
 studied.delete(key(current.unitIdx, current.lessonIdx));
 persist();
 document.getElementById('markBtn').disabled = false;
