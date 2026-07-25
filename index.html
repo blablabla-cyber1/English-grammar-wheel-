@@ -3,107 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>💖 Grammar Glow-Up Wheel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Tune In — B2 Grammar Dial</title>
 <style>
 :root{
---pink-hot:#FF5FA2;
---pink-mid:#FF8FC0;
---pink-soft:#FFD3E6;
---pink-pale:#FFF0F6;
---lav:#C9A6FF;
---gold:#FFC93C;
---mint:#7BE0C7;
---ink:#5A3550;
---white:#FFFFFF;
+--paper:#EDE6D6;
+--paper-dark:#E1D8C2;
+--ink:#2A2620;
+--navy:#2B3A55;
+--navy-deep:#1D2A3F;
+--red:#B23A48;
+--gold:#C9962C;
+--line:#c9bfa4;
+--card:#FBF8F1;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
 background:
-radial-gradient(circle at 10% 0%, #FFE3F0 0%, transparent 40%),
-radial-gradient(circle at 90% 10%, #F3E3FF 0%, transparent 40%),
-radial-gradient(circle at 50% 100%, #FFF0F7 0%, transparent 55%),
-linear-gradient(180deg, var(--pink-pale), #FFE6F2 60%, #FBEBFF);
-background-attachment:fixed;
+radial-gradient(circle at 15% 10%, #f4eedd 0%, transparent 45%),
+var(--paper);
 color:var(--ink);
-font-family:'Quicksand', sans-serif;
+font-family: 'Iowan Old Style','Georgia', serif;
 min-height:100vh;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:30px 16px 70px;
-overflow-x:hidden;
-position:relative;
+padding:28px 16px 60px;
 }
-
-/* floating background sparkles */
-.bg-sparkle{
-position:fixed;
-font-size:22px;
-opacity:.35;
-pointer-events:none;
-animation:floaty 7s ease-in-out infinite;
-z-index:0;
-user-select:none;
-}
-@keyframes floaty{
-0%,100%{ transform:translateY(0) rotate(0deg); }
-50%{ transform:translateY(-22px) rotate(12deg); }
-}
-
-.masthead{ text-align:center; margin-bottom:8px; position:relative; z-index:1; }
+.masthead{ text-align:center; margin-bottom:6px; }
 .eyebrow{
-font-weight:700;
-letter-spacing:.18em;
-font-size:12px;
-color:var(--pink-hot);
+font-family:'Courier New', monospace;
+letter-spacing:.25em;
+font-size:11px;
+color:var(--navy);
 text-transform:uppercase;
 }
 h1{
-font-family:'Pacifico', cursive;
-font-weight:400;
-font-size:clamp(30px,6vw,48px);
-margin:6px 0 4px;
-background:linear-gradient(90deg, var(--pink-hot), var(--lav) 60%, var(--pink-hot));
--webkit-background-clip:text;
-background-clip:text;
-color:transparent;
+font-size:clamp(28px,5vw,42px);
+margin:4px 0 2px;
+font-weight:700;
+letter-spacing:.01em;
 }
 .sub{
-font-size:13.5px;
-color:#9A6C8C;
-max-width:480px;
+font-family:'Courier New', monospace;
+font-size:12.5px;
+color:#6b6353;
+max-width:520px;
 margin:0 auto 18px;
-font-weight:600;
 }
 
-.progress-wrap{ width:min(680px,92vw); margin-bottom:26px; position:relative; z-index:1; }
+.progress-wrap{ width:min(680px,92vw); margin-bottom:26px; }
 .progress-label{
 display:flex;
 justify-content:space-between;
-font-size:13px;
-font-weight:700;
-color:var(--pink-hot);
+font-family:'Courier New', monospace;
+font-size:11.5px;
+letter-spacing:.08em;
+color:var(--navy);
 margin-bottom:6px;
-}
-.progress-label span:last-child{
-background:var(--white);
-padding:2px 10px;
-border-radius:20px;
-box-shadow:0 2px 6px rgba(255,95,162,.25);
+text-transform:uppercase;
 }
 .tally{
 display:grid;
 grid-template-columns:repeat(30,1fr);
-gap:4px;
-height:18px;
+gap:3px;
+height:16px;
 }
 .tick{
-background:#FFE3EF;
-border:1px solid #FFC7DE;
-border-radius:9px;
+background:var(--paper-dark);
+border:1px solid var(--line);
+border-radius:1px;
 position:relative;
 overflow:hidden;
 }
@@ -111,14 +80,10 @@ overflow:hidden;
 position:absolute;
 left:0; top:0; bottom:0;
 width:0%;
-background:linear-gradient(90deg, var(--pink-hot), var(--lav));
-transition:width .35s ease;
-border-radius:9px;
+background:var(--red);
+transition:width .3s ease;
 }
-.tick.complete{
-border-color:var(--gold);
-box-shadow:0 0 6px rgba(255,201,60,.7);
-}
+.tick.complete{ border-color:var(--red); }
 
 main{
 display:flex;
@@ -127,74 +92,61 @@ gap:36px;
 align-items:flex-start;
 justify-content:center;
 width:min(1000px,96vw);
-position:relative;
-z-index:1;
 }
 
-.dial-col{ display:flex; flex-direction:column; align-items:center; gap:16px; }
+.dial-col{ display:flex; flex-direction:column; align-items:center; gap:18px; }
 .dial-frame{ position:relative; width:340px; height:340px; }
 .needle{
 position:absolute;
-top:-26px;
-left:50%;
+top:-14px; left:50%;
 transform:translateX(-50%);
-font-size:34px;
-z-index:6;
-filter:drop-shadow(0 3px 4px rgba(255,95,162,.5));
-animation:bob 1.6s ease-in-out infinite;
-}
-@keyframes bob{
-0%,100%{ transform:translateX(-50%) translateY(0); }
-50%{ transform:translateX(-50%) translateY(4px); }
+width:0; height:0;
+border-left:11px solid transparent;
+border-right:11px solid transparent;
+border-top:20px solid var(--navy-deep);
+z-index:5;
+filter:drop-shadow(0 2px 2px rgba(0,0,0,.25));
 }
 canvas{
 display:block;
 border-radius:50%;
 box-shadow:
-0 0 0 8px var(--white),
-0 0 0 12px var(--pink-hot),
-0 20px 40px -14px rgba(255,95,162,.55);
+0 0 0 6px var(--card),
+0 0 0 9px var(--navy-deep),
+0 18px 30px -12px rgba(30,25,15,.45);
 }
 .hub-btn{
 position:absolute;
 top:50%; left:50%;
 transform:translate(-50%,-50%);
-width:86px; height:86px;
+width:78px; height:78px;
 border-radius:50%;
-background:radial-gradient(circle at 32% 28%, #FF8FC0, var(--pink-hot) 70%);
-color:var(--white);
-border:4px solid var(--white);
-font-family:'Quicksand',sans-serif;
-font-weight:800;
-letter-spacing:.08em;
-font-size:15px;
+background:radial-gradient(circle at 35% 30%, #3a4d6e, var(--navy-deep));
+color:var(--paper);
+border:3px solid var(--gold);
+font-family:'Courier New', monospace;
+font-weight:700;
+letter-spacing:.1em;
+font-size:13px;
 cursor:pointer;
-z-index:7;
-box-shadow:0 6px 16px rgba(255,95,162,.55), 0 0 0 3px var(--pink-soft);
-transition:transform .15s ease, box-shadow .2s ease;
-animation:pulse 2.2s ease-in-out infinite;
+z-index:6;
+box-shadow:0 4px 10px rgba(0,0,0,.35);
+transition:transform .12s ease;
 }
-@keyframes pulse{
-0%,100%{ box-shadow:0 6px 16px rgba(255,95,162,.55), 0 0 0 3px var(--pink-soft); }
-50%{ box-shadow:0 6px 22px rgba(255,95,162,.75), 0 0 0 8px var(--pink-soft); }
-}
-.hub-btn:active{ transform:translate(-50%,-50%) scale(.9); }
-.hub-btn:disabled{ opacity:.65; cursor:default; animation:none; }
-.hub-btn:focus-visible{ outline:3px solid var(--lav); outline-offset:4px; }
+.hub-btn:active{transform:translate(-50%,-50%) scale(.94);}
+.hub-btn:disabled{opacity:.6; cursor:default;}
+.hub-btn:focus-visible{outline:3px solid var(--red); outline-offset:3px;}
 
 .toggle-row{
-font-size:12.5px;
-font-weight:700;
-color:#9A6C8C;
+font-family:'Courier New', monospace;
+font-size:12px;
+color:#5a5344;
 display:flex;
 align-items:center;
 gap:8px;
-background:var(--white);
-padding:8px 14px;
-border-radius:20px;
-box-shadow:0 3px 10px rgba(255,95,162,.15);
+text-align:center;
 }
-.toggle-row input{ accent-color:var(--pink-hot); width:15px; height:15px; }
+.toggle-row input{accent-color:var(--red);}
 
 .card-col{
 flex:1 1 320px;
@@ -205,202 +157,162 @@ align-items:flex-start;
 justify-content:center;
 }
 .index-card{
-background:var(--white);
+background:var(--card);
 width:100%;
-border-radius:26px;
-padding:28px 26px 24px;
+border-radius:4px;
+padding:26px 24px 22px;
 position:relative;
-box-shadow:0 16px 34px -14px rgba(255,95,162,.4), 0 2px 0 rgba(255,255,255,.6) inset;
-border:2px dashed var(--pink-soft);
+box-shadow:0 12px 24px -14px rgba(30,25,15,.4), 0 1px 0 rgba(255,255,255,.4) inset;
+border:1px solid var(--line);
 transform:rotate(-1deg);
 transition:transform .5s cubic-bezier(.2,.9,.3,1.2);
 }
-.index-card::before{
-content:"✂";
-position:absolute;
-top:-14px; left:20px;
-font-size:16px;
-color:var(--pink-mid);
-background:var(--pink-pale);
-padding:2px 6px;
-border-radius:50%;
-}
+.index-card::before{ content:""; position:absolute; top:20px; left:0; right:0; border-top:1px solid #d8cdb2; }
+.index-card::after{ content:""; position:absolute; top:0; bottom:0; left:52px; border-left:1px solid #e7b9b9; }
 .card-eyebrow{
-font-size:12px;
-font-weight:800;
-letter-spacing:.14em;
-color:var(--lav);
+font-family:'Courier New', monospace;
+font-size:11px;
+letter-spacing:.15em;
+color:var(--red);
 text-transform:uppercase;
-margin-bottom:8px;
+margin-bottom:10px;
 }
-.card-number{ font-size:13px; font-weight:700; color:var(--pink-hot); margin-bottom:4px; }
-.card-title{ font-family:'Pacifico',cursive; font-weight:400; font-size:25px; line-height:1.3; margin:4px 0 2px; color:var(--ink); }
-.card-title.placeholder{ color:#C9A8BC; font-size:16px; font-family:'Quicksand',sans-serif; font-weight:600; }
+.card-number{ font-family:'Courier New', monospace; font-size:13px; color:var(--navy); margin-bottom:2px; }
+.card-title{ font-size:23px; font-weight:700; line-height:1.2; margin:4px 0 2px; }
+.card-title.placeholder{ color:#a79c85; font-style:italic; font-weight:400; font-size:17px; }
 .card-lesson{
 font-size:17px;
-font-weight:700;
 color:var(--ink);
-margin:10px 0 16px;
-padding:10px 14px;
-background:linear-gradient(90deg, var(--pink-pale), #FFFFFF);
-border-left:4px solid var(--gold);
-border-radius:12px;
+margin:8px 0 14px;
+padding-left:14px;
+border-left:3px solid var(--gold);
 min-height:26px;
 }
 .card-actions{ display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
 .btn{
-font-family:'Quicksand',sans-serif;
-font-size:12.5px;
-font-weight:800;
-letter-spacing:.03em;
-padding:10px 16px;
-border-radius:20px;
-border:2px solid var(--pink-hot);
-background:var(--white);
-color:var(--pink-hot);
+font-family:'Courier New', monospace;
+font-size:12px;
+letter-spacing:.06em;
+text-transform:uppercase;
+padding:9px 14px;
+border-radius:3px;
+border:1px solid var(--navy);
+background:transparent;
+color:var(--navy);
 cursor:pointer;
-transition:transform .15s ease, background .15s ease, color .15s ease;
+transition:background .15s ease, color .15s ease;
 }
-.btn:hover{ background:var(--pink-hot); color:var(--white); transform:translateY(-2px); }
-.btn.primary{ background:linear-gradient(90deg, var(--pink-hot), var(--lav)); color:var(--white); border-color:transparent; }
-.btn.primary:hover{ filter:brightness(1.08); transform:translateY(-2px); }
-.btn:disabled{ opacity:.4; cursor:default; transform:none; background:var(--white); color:var(--pink-hot); }
-.btn.primary:disabled{ background:linear-gradient(90deg, var(--pink-hot), var(--lav)); color:var(--white); }
+.btn:hover{background:var(--navy); color:var(--paper);}
+.btn.primary{ background:var(--red); color:var(--paper); border-color:var(--red); }
+.btn.primary:hover{background:#96222f;}
+.btn:disabled{opacity:.45; cursor:default; background:transparent; color:var(--navy);}
 
 .stamp{
-position:absolute; top:16px; right:16px;
-font-size:13px; font-weight:800; color:var(--white);
-background:linear-gradient(135deg, var(--gold), #FFA8D8);
-border-radius:50%;
-width:52px;height:52px;
+position:absolute; top:18px; right:18px;
+font-family:'Courier New', monospace;
+font-size:11px; color:var(--gold);
+border:2px solid var(--gold); border-radius:50%;
+width:46px;height:46px;
 display:flex;align-items:center;justify-content:center;
-transform:rotate(14deg);
+transform:rotate(12deg);
 opacity:0;
-transition:opacity .3s ease, transform .3s ease;
+transition:opacity .3s ease;
 text-align:center; line-height:1.1;
-box-shadow:0 4px 10px rgba(255,201,60,.5);
 }
-.stamp.show{ opacity:1; transform:rotate(14deg) scale(1); }
+.stamp.show{opacity:.85;}
 
-.legend{ width:min(1000px,96vw); margin-top:36px; position:relative; z-index:1; }
+.legend{ width:min(1000px,96vw); margin-top:34px; }
 .legend-title{
-font-size:13px;
-font-weight:800;
-letter-spacing:.06em;
-color:var(--pink-hot);
-margin-bottom:12px;
+font-family:'Courier New', monospace;
+font-size:11.5px;
+letter-spacing:.15em;
+color:var(--navy);
+text-transform:uppercase;
+margin-bottom:10px;
 }
 details.unit{
-background:var(--white);
-border:2px solid var(--pink-soft);
-border-radius:18px;
-margin-bottom:10px;
+background:var(--card);
+border:1px solid var(--line);
+border-radius:4px;
+margin-bottom:8px;
 padding:0;
-overflow:hidden;
-transition:border-color .2s ease, box-shadow .2s ease;
 }
-details.unit:hover{ border-color:var(--pink-mid); box-shadow:0 6px 16px rgba(255,95,162,.18); }
 details.unit summary{
 list-style:none;
 cursor:pointer;
-padding:12px 16px;
+padding:10px 14px;
 display:flex;
 align-items:center;
 gap:10px;
 font-size:15px;
-font-weight:700;
 }
 details.unit summary::-webkit-details-marker{ display:none; }
 details.unit summary .arrow{
-color:var(--pink-hot);
+font-family:'Courier New', monospace;
+color:var(--navy);
 transition:transform .2s ease;
 flex:none;
-font-size:13px;
 }
 details.unit[open] summary .arrow{ transform:rotate(90deg); }
 details.unit summary .u-num{
+font-family:'Courier New', monospace;
 font-size:12px;
-font-weight:800;
-color:var(--white);
-background:linear-gradient(135deg, var(--pink-hot), var(--lav));
-width:26px; height:26px;
-border-radius:50%;
-display:flex; align-items:center; justify-content:center;
+color:var(--navy);
+width:20px;
 flex:none;
 }
-details.unit summary .u-name{ flex:1; color:var(--ink); }
+details.unit summary .u-name{ flex:1; font-weight:600; }
 details.unit summary .u-frac{
-font-size:12px;
-font-weight:800;
-color:var(--pink-hot);
-background:var(--pink-pale);
-padding:3px 10px;
-border-radius:12px;
+font-family:'Courier New', monospace;
+font-size:11.5px;
+color:var(--red);
 flex:none;
 }
-.lesson-list{ padding:2px 16px 14px 52px; }
+.lesson-list{ padding:2px 14px 12px 46px; }
 .lesson-item{
 display:flex;
 align-items:baseline;
-gap:9px;
+gap:8px;
 font-size:13.5px;
-font-weight:600;
-padding:5px 6px;
+padding:3px 0;
 cursor:pointer;
 user-select:none;
-border-radius:10px;
-transition:background .15s ease;
+border-bottom:1px dashed var(--line);
 }
-.lesson-item:hover{ background:var(--pink-pale); }
-.lesson-item .box{ color:var(--pink-hot); flex:none; }
-.lesson-item.done{ color:var(--lav); text-decoration:line-through; }
-.lesson-item.current{ background:linear-gradient(90deg, var(--pink-soft), #F3E3FF); }
+.lesson-item:last-child{ border-bottom:none; }
+.lesson-item .box{
+font-family:'Courier New', monospace;
+color:var(--navy);
+flex:none;
+}
+.lesson-item.done{ color:var(--red); text-decoration:line-through; }
+.lesson-item.current{ background:rgba(201,150,44,.18); border-radius:3px; }
 
 footer.note{
-margin-top:32px;
-font-size:12px;
-font-weight:600;
-color:#B487A6;
+margin-top:30px;
+font-family:'Courier New', monospace;
+font-size:11px;
+color:#9a9078;
 text-align:center;
 max-width:520px;
-position:relative;
-z-index:1;
-}
-
-/* confetti particles */
-.confetti-piece{
-position:fixed;
-top:50%; left:50%;
-font-size:22px;
-pointer-events:none;
-z-index:50;
-animation-timing-function:ease-out;
-animation-fill-mode:forwards;
 }
 
 @media (prefers-reduced-motion: reduce){
-canvas, .index-card, .hub-btn, .needle{ transition:none !important; animation:none !important; }
+canvas, .index-card{transition:none !important;}
 }
 </style>
 </head>
 <body>
 
-<span class="bg-sparkle" style="top:8%; left:6%; animation-delay:0s;">✨</span>
-<span class="bg-sparkle" style="top:18%; left:88%; animation-delay:1.2s;">💕</span>
-<span class="bg-sparkle" style="top:70%; left:4%; animation-delay:2.1s;">🌸</span>
-<span class="bg-sparkle" style="top:82%; left:90%; animation-delay:.6s;">💖</span>
-<span class="bg-sparkle" style="top:45%; left:2%; animation-delay:3s;">⭐</span>
-<span class="bg-sparkle" style="top:5%; left:50%; animation-delay:1.8s;">🎀</span>
-
 <div class="masthead">
-<div class="eyebrow">✨ B2 English · Study Wheel ✨</div>
-<h1>Spin & Slay Grammar</h1>
-<div class="sub">Give the wheel a spin, bestie — it'll pick a unit, then hand you one cute little lesson to study. Every single one of the 203 lessons is in the mix! 💅</div>
+<div class="eyebrow">B2 English · Grammar Study Dial</div>
+<h1>Tune In For Today's Lesson</h1>
+<div class="sub">Spin the dial to land on one of the 30 units, then it pulls a specific lesson from inside that unit — every item in your syllabus is in the pool.</div>
 </div>
 
 <div class="progress-wrap">
 <div class="progress-label">
-<span>💗 Lessons conquered</span>
+<span>Lessons covered</span>
 <span id="progressCount">0 / 0</span>
 </div>
 <div class="tally" id="tally"></div>
@@ -409,29 +321,25 @@ canvas, .index-card, .hub-btn, .needle{ transition:none !important; animation:no
 <main>
 <div class="dial-col">
 <div class="dial-frame">
-<div class="needle">💖</div>
+<div class="needle"></div>
 <canvas id="wheel" width="340" height="340"></canvas>
-<button class="hub-btn" id="spinBtn">SPIN!</button>
+<button class="hub-btn" id="spinBtn">SPIN</button>
 </div>
 <label class="toggle-row">
 <input type="checkbox" id="skipDone" checked>
-Only pull lessons I haven't slayed yet
-</label>
-<label class="toggle-row">
-<input type="checkbox" id="soundToggle" checked>
-🔊 Sound effects
+Only pull lessons I haven't studied yet
 </label>
 </div>
 
 <div class="card-col">
 <div class="index-card" id="card">
-<div class="stamp" id="stamp">YAY!</div>
-<div class="card-eyebrow">📌 today's pick</div>
-<div class="card-number" id="cardNumber">Unit —</div>
-<div class="card-title placeholder" id="cardTitle">Spin the wheel to reveal your lesson ✨</div>
+<div class="stamp" id="stamp">DONE</div>
+<div class="card-eyebrow">On the air</div>
+<div class="card-number" id="cardNumber">Frequency —</div>
+<div class="card-title placeholder" id="cardTitle">Spin the dial to pick tonight's unit.</div>
 <div class="card-lesson" id="cardLesson"></div>
 <div class="card-actions">
-<button class="btn primary" id="markBtn" disabled>💗 Mark as studied</button>
+<button class="btn primary" id="markBtn" disabled>Mark lesson as studied</button>
 <button class="btn" id="undoBtn" disabled>Undo</button>
 </div>
 </div>
@@ -439,11 +347,11 @@ Only pull lessons I haven't slayed yet
 </main>
 
 <div class="legend">
-<div class="legend-title">🎀 Full syllabus — tap to open a unit, tap a lesson to check it off</div>
+<div class="legend-title">Full syllabus — expand a unit, tap any lesson to toggle studied</div>
 <div id="legendGrid"></div>
 </div>
 
-<footer class="note">Your progress saves automatically on this device 💾💕 — come back anytime and keep slaying grammar.</footer>
+<footer class="note">Progress is saved on this device automatically. The wheel picks the unit; the pool underneath always draws from every individual lesson listed inside it.</footer>
 
 <script>
 const units = [
@@ -481,70 +389,13 @@ const units = [
 
 const N = units.length;
 const TOTAL_LESSONS = units.reduce((s,u)=>s+u.lessons.length,0);
-const colors = ["#FF5FA2","#FFB6D9","#C9A6FF","#FFC93C","#7BE0C7"];
+const colors = ["#2B3A55","#B23A48","#C9962C","#5B6F52"];
 const STORAGE_KEY = "grammar-wheel-studied-lessons-v2";
-const CONFETTI_EMOJI = ["✨","💕","🌸","💖","⭐","🎀","💗"];
 
 let studied = new Set();
 let current = null;
 let rotation = 0;
 let spinning = false;
-let lastTickSlice = null;
-let soundOn = true;
-
-/* ---------- sound engine (synthesized, no external files) ---------- */
-let audioCtx = null;
-function ensureAudio(){
-if(!audioCtx){
-audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-}
-if(audioCtx.state === 'suspended') audioCtx.resume();
-}
-function playTick(){
-if(!soundOn || !audioCtx) return;
-const t = audioCtx.currentTime;
-const osc = audioCtx.createOscillator();
-const gain = audioCtx.createGain();
-osc.type = 'square';
-osc.frequency.setValueAtTime(1250, t);
-gain.gain.setValueAtTime(0.12, t);
-gain.gain.exponentialRampToValueAtTime(0.001, t + 0.05);
-osc.connect(gain).connect(audioCtx.destination);
-osc.start(t);
-osc.stop(t + 0.06);
-}
-function playChime(){
-if(!soundOn || !audioCtx) return;
-const notes = [523.25, 659.25, 783.99, 1046.5]; // C5 E5 G5 C6
-notes.forEach((f,i)=>{
-const t = audioCtx.currentTime + i*0.09;
-const osc = audioCtx.createOscillator();
-const gain = audioCtx.createGain();
-osc.type = 'sine';
-osc.frequency.setValueAtTime(f, t);
-gain.gain.setValueAtTime(0.0001, t);
-gain.gain.exponentialRampToValueAtTime(0.22, t + 0.02);
-gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
-osc.connect(gain).connect(audioCtx.destination);
-osc.start(t);
-osc.stop(t + 0.45);
-});
-}
-function playPop(){
-if(!soundOn || !audioCtx) return;
-const t = audioCtx.currentTime;
-const osc = audioCtx.createOscillator();
-const gain = audioCtx.createGain();
-osc.type = 'sine';
-osc.frequency.setValueAtTime(440, t);
-osc.frequency.exponentialRampToValueAtTime(880, t + 0.12);
-gain.gain.setValueAtTime(0.001, t);
-gain.gain.exponentialRampToValueAtTime(0.18, t + 0.02);
-gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
-osc.connect(gain).connect(audioCtx.destination);
-osc.start(t);
-osc.stop(t + 0.2);
-}
 
 const canvas = document.getElementById('wheel');
 const ctx = canvas.getContext('2d');
@@ -570,25 +421,22 @@ ctx.moveTo(cx,cy);
 ctx.arc(cx,cy,radius,start,end);
 ctx.closePath();
 ctx.fillStyle = colors[i % colors.length];
-ctx.globalAlpha = unitComplete(i) ? 0.3 : 1;
+ctx.globalAlpha = unitComplete(i) ? 0.35 : 1;
 ctx.fill();
-ctx.strokeStyle = "rgba(255,255,255,.6)";
-ctx.lineWidth = 1.5;
-ctx.stroke();
 ctx.globalAlpha = 1;
 ctx.save();
 ctx.translate(cx,cy);
 ctx.rotate(start + slice/2);
 ctx.textAlign = "right";
-ctx.fillStyle = "#FFFFFF";
-ctx.font = "800 13px 'Quicksand', sans-serif";
+ctx.fillStyle = "#F4EEDD";
+ctx.font = "700 13px 'Courier New', monospace";
 ctx.fillText((i+1).toString(), radius - 12, 5);
 ctx.restore();
 }
 ctx.beginPath();
 ctx.arc(cx,cy,radius,0,Math.PI*2);
-ctx.strokeStyle = "#FFFFFF";
-ctx.lineWidth = 3;
+ctx.strokeStyle = "#1D2A3F";
+ctx.lineWidth = 2;
 ctx.stroke();
 }
 
@@ -600,14 +448,14 @@ const det = document.createElement('details');
 det.className = 'unit';
 if(current && current.unitIdx === ui) det.open = true;
 const done = unitDoneCount(ui);
-det.innerHTML = `<summary>         <span class="arrow">▶</span>         <span class="u-num">${ui+1}</span>         <span class="u-name">${u.name}</span>         <span class="u-frac">${done}/${u.lessons.length}</span>       </summary>       <div class="lesson-list"></div>`;
+det.innerHTML = `<summary>         <span class="arrow">▶</span>         <span class="u-num">${(ui+1).toString().padStart(2,'0')}</span>         <span class="u-name">${u.name}</span>         <span class="u-frac">${done}/${u.lessons.length}</span>       </summary>       <div class="lesson-list"></div>`;
 const list = det.querySelector('.lesson-list');
 u.lessons.forEach((lname, li)=>{
 const isDone = studied.has(key(ui,li));
 const isCurrent = current && current.unitIdx===ui && current.lessonIdx===li;
 const row = document.createElement('div');
 row.className = 'lesson-item' + (isDone?' done':'') + (isCurrent?' current':'');
-row.innerHTML = `<span class="box">${isDone?'💗':'🤍'}</span><span>${lname}</span>`;
+row.innerHTML = `<span class="box">${isDone?'☑':'☐'}</span><span>${lname}</span>`;
 row.addEventListener('click', ()=>{
 const k = key(ui,li);
 if(studied.has(k)) studied.delete(k); else studied.add(k);
@@ -682,56 +530,26 @@ if(pool.length === 0) pool = [...Array(lessons.length).keys()];
 return pool[Math.floor(Math.random()*pool.length)];
 }
 
-function burstConfetti(){
-const originX = window.innerWidth/2;
-const originY = window.innerHeight*0.38;
-for(let i=0;i<22;i++){
-const piece = document.createElement('div');
-piece.className = 'confetti-piece';
-piece.textContent = CONFETTI_EMOJI[Math.floor(Math.random()*CONFETTI_EMOJI.length)];
-const angle = Math.random()*Math.PI*2;
-const dist = 80 + Math.random()*160;
-const dx = Math.cos(angle)*dist;
-const dy = Math.sin(angle)*dist - 60;
-const rot = (Math.random()*360-180).toFixed(0);
-const dur = (0.8 + Math.random()*0.6).toFixed(2);
-piece.style.left = originX + 'px';
-piece.style.top = originY + 'px';
-piece.style.fontSize = (16 + Math.random()16) + 'px';
-piece.style.setProperty('--dx', dx+'px');
-piece.style.setProperty('--dy', dy+'px');
-piece.style.setProperty('--rot', rot+'deg');
-piece.animate([
-{ transform:'translate(-50%,-50%) translate(0,0) rotate(0deg)', opacity:1 },
-{ transform:`translate(-50%,-50%) translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity:0 }
-], { duration: dur1000, easing:'cubic-bezier(.2,.8,.3,1)' });
-document.body.appendChild(piece);
-setTimeout(()=>piece.remove(), dur*1000+50);
-}
-}
-
 function showResult(unitIdx){
 const lessonIdx = pickLesson(unitIdx);
 current = { unitIdx, lessonIdx };
 const k = key(unitIdx,lessonIdx);
-document.getElementById('cardNumber').textContent = `Unit ${unitIdx+1} / ${N}`;
+document.getElementById('cardNumber').textContent = `Unit ${(unitIdx+1).toString().padStart(2,'0')} / ${N}`;
 const titleEl = document.getElementById('cardTitle');
 titleEl.classList.remove('placeholder');
 titleEl.textContent = units[unitIdx].name;
-document.getElementById('cardLesson').textContent = "💫 " + units[unitIdx].lessons[lessonIdx];
+document.getElementById('cardLesson').textContent = units[unitIdx].lessons[lessonIdx];
 document.getElementById('markBtn').disabled = studied.has(k);
 document.getElementById('undoBtn').disabled = !studied.has(k);
 document.getElementById('stamp').classList.toggle('show', studied.has(k));
 const card = document.getElementById('card');
-card.style.transform = 'rotate(1deg) scale(1.03)';
+card.style.transform = 'rotate(1deg) scale(1.02)';
 setTimeout(()=>{ card.style.transform = 'rotate(-1deg) scale(1)'; }, 220);
 renderLegend();
-burstConfetti();
 }
 
 document.getElementById('spinBtn').addEventListener('click', ()=>{
 if(spinning) return;
-ensureAudio();
 spinning = true;
 const btn = document.getElementById('spinBtn');
 btn.disabled = true;
@@ -747,33 +565,20 @@ const duration = 3200;
 const startRotation = rotation;
 const delta = finalRotation - startRotation;
 const startTime = performance.now();
-lastTickSlice = null;
 
 function easeOutCubic(t){ return 1 - Math.pow(1-t,3); }
-
-function sliceUnderPointer(){
-const twoPi = Math.PI*2;
-let value = ((-Math.PI/2 - rotation) % twoPi + twoPi*2) % twoPi;
-return Math.floor(value/slice) % N;
-}
 
 function animate(now){
 const elapsed = now - startTime;
 const t = Math.min(elapsed/duration, 1);
 rotation = startRotation + delta*easeOutCubic(t);
 drawWheel();
-const currentSlice = sliceUnderPointer();
-if(currentSlice !== lastTickSlice){
-lastTickSlice = currentSlice;
-playTick();
-}
 if(t < 1){
 requestAnimationFrame(animate);
 }else{
 rotation = finalRotation % (Math.PI*2);
 spinning = false;
 btn.disabled = false;
-playChime();
 showResult(target);
 }
 }
@@ -782,15 +587,12 @@ requestAnimationFrame(animate);
 
 document.getElementById('markBtn').addEventListener('click', ()=>{
 if(!current) return;
-ensureAudio();
 studied.add(key(current.unitIdx, current.lessonIdx));
 persist();
 document.getElementById('markBtn').disabled = true;
 document.getElementById('undoBtn').disabled = false;
 document.getElementById('stamp').classList.add('show');
 renderAll();
-burstConfetti();
-playPop();
 });
 
 document.getElementById('undoBtn').addEventListener('click', ()=>{
@@ -801,11 +603,6 @@ document.getElementById('markBtn').disabled = false;
 document.getElementById('undoBtn').disabled = true;
 document.getElementById('stamp').classList.remove('show');
 renderAll();
-});
-
-document.getElementById('soundToggle').addEventListener('change', (e)=>{
-soundOn = e.target.checked;
-if(soundOn) ensureAudio();
 });
 
 load();
