@@ -650,19 +650,19 @@ renderLegend();
 renderTally();
 }
 
-async function persist(){
+function persist(){
 try{
-await window.storage.set(STORAGE_KEY, JSON.stringify(Array.from(studied)), false);
-}catch(e){ console.error('storage set failed', e); }
+localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(studied)));
+}catch(e){ console.error('localStorage set failed', e); }
 }
 
-async function load(){
+function load(){
 try{
-const res = await window.storage.get(STORAGE_KEY, false);
-if(res && res.value){
-studied = new Set(JSON.parse(res.value));
+const raw = localStorage.getItem(STORAGE_KEY);
+if(raw){
+studied = new Set(JSON.parse(raw));
 }
-}catch(e){ /* no key yet */ }
+}catch(e){ /* no key yet or blocked storage */ }
 renderAll();
 }
 
